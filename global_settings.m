@@ -2,13 +2,13 @@
 settings = struct;
 
 % Experiment's Independant variables
-settings.TYPE_OF_TASK = 1:2;
+settings.TASK_PRESENTATION = 1:2;
 settings.BLOCKED_SEARCH = 1;
 settings.MIXED_SEARCH = 2;
 
-settings.TYPE_OF_SEARCH = 1:2;
-settings.FEATURE_SEARCH = 1;
-settings.CONJUNCTION_SEARCH = 2;
+settings.TYPE_OF_TASK = 1:2;
+settings.TASK_1 = 1;
+settings.TASK_2 = 2;
 
 settings.TARGET_PRESENCE = 0:1;
 settings.TARGET_ABSENT = 0;
@@ -27,7 +27,10 @@ settings.NUMBER_OF_TRAINING_TRIAL_FOR_MIXED_TASK = 24;
 
 % Response keys
 settings.LEFT_RESPONSE_KEY = 'a'; 
-settings.RIGHT_RESPONSE_KEY = 'p'; 
+settings.RIGHT_RESPONSE_KEY = 'z'; 
+settings.SS1_RESPONSE_KEY = 'i'; 
+settings.SS2_RESPONSE_KEY = 'o'; 
+settings.SS3_RESPONSE_KEY = 'p'; 
 settings.NEXT_KEY_FOR_EXPERIMENTER = 'n'; 
 settings.NEXT_KEY_FOR_PARTICIPANT = 32;
 

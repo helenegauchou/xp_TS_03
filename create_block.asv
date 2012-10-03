@@ -1,11 +1,11 @@
-function matrix_block = create_block(task_presentation,task_type,number_of_trial,number_of_experimental_conditions)
+function matrix_block = create_block(task_presentation,search_type,number_of_trial,number_of_experimental_conditions)
 
 matrix_settings;
 global_settings;
 
 matrix = ones(number_of_trial,3);
 line = 0;
-for search = task_type
+for search = search_type
     for  rep = 1:(number_of_trial /number_of_experimental_conditions)
         for target = settings.TARGET_PRESENCE
             for setsize = settings.SET_SIZE

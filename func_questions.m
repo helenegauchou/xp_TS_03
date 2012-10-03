@@ -1,7 +1,6 @@
-function [ID question_ID_subject part_number question_part_number task_type search_type block_number ISI number_of_trial] = func_questions
+function [ID question_ID_subject part_number question_part_number task_presentation task_type block_number ISI number_of_trial] = func_questions
 
 global win0 winclear 
-%global ID question_ID_subject part_number task_type search_type block_number ISI number_of_trial question_part_number
 
 HideCursor;
 
@@ -24,13 +23,15 @@ part_number = str2num(question_part_number);
 
 % Task type
 Screen('CopyWindow',winclear,win0);
-question_task_type = GetEchoString(win0,'FOR EXPERIMENTER ONLY - Task type? Blocked [1] or Mixed [2]?',settings.LOCATION_TEXT_X,settings.LOCATION_TEXT_Y,settings.LETTER_COLOR_INSTRUCTIONS,settings.BACKGROUND_COLOR);
-task_type = str2num(question_task_type);
-if task_type == 1
+question_task_presentation = GetEchoString(win0,'FOR EXPERIMENTER ONLY - Task presentation? Blocked [1] or Mixed [2]?',settings.LOCATION_TEXT_X,settings.LOCATION_TEXT_Y,settings.LETTER_COLOR_INSTRUCTIONS,settings.BACKGROUND_COLOR);
+task_presentation = str2num(question_task_presentation);
+if task_presentation == 1
     % Search type
     Screen('CopyWindow',winclear,win0);
-    question_search_type = GetEchoString(win0,'FOR EXPERIMENTER ONLY - Search type? Feature [1] or Conjunction [2]?',settings.LOCATION_TEXT_X,settings.LOCATION_TEXT_Y,settings.LETTER_COLOR_INSTRUCTIONS,settings.BACKGROUND_COLOR);
-    search_type = str2num(question_search_type);
+    question_task_type = GetEchoString(win0,'FOR EXPERIMENTER ONLY - Task type? Feature search [1] or Counting task [2]?',settings.LOCATION_TEXT_X,settings.LOCATION_TEXT_Y,settings.LETTER_COLOR_INSTRUCTIONS,settings.BACKGROUND_COLOR);
+    task_type = str2num(question_task_type);
+else
+    task_type = 999;
 end
 
 % Block number

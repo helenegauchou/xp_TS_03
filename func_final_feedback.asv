@@ -1,5 +1,5 @@
 function [global_accuracy_rate global_accuracy_rate_FEATURE global_accuracy_rate_TASK_2] =...
-    func_final_feedback(task_presentation,task_type,number_of_trial,MATRIX_data)
+    func_final_feedback(task_presentation,number_of_trial,MATRIX_data)
 
 global win0 winclear
 %global global_accuracy_rate global_accuracy_rate_FEATURE global_accuracy_rate_CONJUNCTION
@@ -22,11 +22,11 @@ if task_presentation == settings.BLOCKED_SEARCH
         matrix_target_PRESENT = matrix_current_part(MATRIX_data((1:number_of_trial),column_target_presence) == 1, :);
         matrix_target_ABSENT = matrix_current_part(MATRIX_data((1:number_of_trial),column_target_presence) == 0, :);
         
-        matrix_target_PRESENT_CORRECT = matrix_target_PRESENT(matrix_target_PRESENT(:,column_accuracy) == 1, :);
-        matrix_target_ABSENT_CORRECT = matrix_target_ABSENT(matrix_target_ABSENT(:,column_accuracy) == 1, :);
+        matrix_target_PRESENT_CORRECT = matrix_target_PRESENT(matrix_target_PRESENT(:,column_accuracy_detection) == 1, :);
+        matrix_target_ABSENT_CORRECT = matrix_target_ABSENT(matrix_target_ABSENT(:,column_accuracy_detection) == 1, :);
         
-        HIT_rate = sum(matrix_target_PRESENT_CORRECT(:,column_accuracy),1) / size(matrix_target_PRESENT,1) * 100;
-        CR_rate = sum(matrix_target_ABSENT_CORRECT(:,column_accuracy),1) / size(matrix_target_ABSENT,1) * 100;
+        HIT_rate = sum(matrix_target_PRESENT_CORRECT(:,column_accuracy_detection),1) / size(matrix_target_PRESENT,1) * 100;
+        CR_rate = sum(matrix_target_ABSENT_CORRECT(:,column_accuracy_detection),1) / size(matrix_target_ABSENT,1) * 100;
         
         HIT_rate_string = int2str(floor(HIT_rate));
         CR_rate_string = int2str(floor(CR_rate));
@@ -106,7 +106,7 @@ if task_presentation == settings.BLOCKED_SEARCH
         end
         
         setsize = settings.SET_SIZE';
-        matRT = matRT';
+        matRT = matRT_HIT';
         mat_intercept_slope=[ones(3,1) setsize]\matRT;
         slope_string = int2str(floor(mat_intercept_slope(2,1)));
         
@@ -145,21 +145,21 @@ elseif task_presentation == settings.MIXED_SEARCH
     matrix_FEATURE_ABSENT_NON_SWITCH = matrix_FEATURE_ABSENT(matrix_FEATURE_ABSENT(:,column_trial_type) == 0, :);
     matrix_FEATURE_ABSENT_SWITCH = matrix_FEATURE_ABSENT(matrix_FEATURE_ABSENT(:,column_trial_type) == 1, :);
         
-    matrix_FEATURE_HIT = matrix_FEATURE_PRESENT(matrix_FEATURE_PRESENT(:,column_accuracy) == 1, :);
+    matrix_FEATURE_HIT = matrix_FEATURE_PRESENT(matrix_FEATURE_PRESENT(:,column_accuracy_detection) == 1, :);
     matrix_feature_HIT_NON_SWITCH = matrix_FEATURE_HIT(matrix_FEATURE_HIT(:,column_trial_type) == 0, :);
     matrix_feature_HIT_SWITCH = matrix_FEATURE_HIT(matrix_FEATURE_HIT(:,column_trial_type) == 1, :);
     
-    matrix_FEATURE_CR = matrix_FEATURE_ABSENT(matrix_FEATURE_ABSENT(:,column_accuracy) == 1, :);
+    matrix_FEATURE_CR = matrix_FEATURE_ABSENT(matrix_FEATURE_ABSENT(:,column_accuracy_detection) == 1, :);
     matrix_feature_CR_NON_SWITCH = matrix_FEATURE_CR(matrix_FEATURE_CR(:,column_trial_type) == 0, :);
     matrix_feature_CR_SWITCH = matrix_FEATURE_CR(matrix_FEATURE_CR(:,column_trial_type) == 1, :);
         
-    HIT_rate_FEATURE = sum(matrix_FEATURE_HIT(:,column_accuracy),1) / size(matrix_FEATURE_PRESENT,1) * 100;
-    HIT_rate_feature_NON_SWITCH_string = int2str(floor(sum(matrix_feature_HIT_NON_SWITCH(:,column_accuracy),1) / size(matrix_FEATURE_PRESENT_NON_SWITCH,1)* 100));
-    HIT_rate_feature_SWITCH_string = int2str(floor(sum(matrix_feature_HIT_SWITCH(:,column_accuracy),1) / size(matrix_FEATURE_PRESENT_SWITCH,1)* 100));
+    HIT_rate_FEATURE = sum(matrix_FEATURE_HIT(:,column_accuracy_detection),1) / size(matrix_FEATURE_PRESENT,1) * 100;
+    HIT_rate_feature_NON_SWITCH_string = int2str(floor(sum(matrix_feature_HIT_NON_SWITCH(:,column_accuracy_detection),1) / size(matrix_FEATURE_PRESENT_NON_SWITCH,1)* 100));
+    HIT_rate_feature_SWITCH_string = int2str(floor(sum(matrix_feature_HIT_SWITCH(:,column_accuracy_detection),1) / size(matrix_FEATURE_PRESENT_SWITCH,1)* 100));
         
-    CR_rate_FEATURE = sum(matrix_FEATURE_CR(:,column_accuracy),1) / size(matrix_FEATURE_ABSENT,1) * 100;
-    CR_rate_feature_NON_SWITCH_string = int2str(floor(sum(matrix_feature_CR_NON_SWITCH(:,column_accuracy),1) / size(matrix_FEATURE_ABSENT_NON_SWITCH,1)* 100));
-    CR_rate_feature_SWITCH_string = int2str(floor(sum(matrix_feature_CR_SWITCH(:,column_accuracy),1) / size(matrix_FEATURE_ABSENT_SWITCH,1)* 100));
+    CR_rate_FEATURE = sum(matrix_FEATURE_CR(:,column_accuracy_detection),1) / size(matrix_FEATURE_ABSENT,1) * 100;
+    CR_rate_feature_NON_SWITCH_string = int2str(floor(sum(matrix_feature_CR_NON_SWITCH(:,column_accuracy_detection),1) / size(matrix_FEATURE_ABSENT_NON_SWITCH,1)* 100));
+    CR_rate_feature_SWITCH_string = int2str(floor(sum(matrix_feature_CR_SWITCH(:,column_accuracy_detection),1) / size(matrix_FEATURE_ABSENT_SWITCH,1)* 100));
         
     HIT_rate_FEATURE_string = int2str(floor(HIT_rate_FEATURE));
     CR_rate_FEATURE_string = int2str(floor(CR_rate_FEATURE));
@@ -185,7 +185,7 @@ elseif task_presentation == settings.MIXED_SEARCH
     matrix_TASK_2_NON_SWITCH_CORRECT_ANSWER = matrix_TASK_2_NON_SWITCH(matrix_TASK_2_NON_SWITCH(:,column_accuracy) == 1, :);
     matrix_TASK_2_SWITCH_CORRECT_ANSWER = matrix_TASK_2_SWITCH(matrix_TASK_2_SWITCH(:,column_accuracy) == 1, :);
    
-    global_accuracy_rate_TASK_2 = sum(matrix_TASK_2_CORRECT_ANSWER(:,column_accuracy),1) / size(matrix_TASK_2,1) * 100;
+    accuracy_non_switch
     accuracy_non_switch = sum(matrix_TASK_2_NON_SWITCH_CORRECT_ANSWER(:,column_accuracy),1) / size(matrix_TASK_2_NON_SWITCH,1) * 100;
     accuracy_switch = sum(matrix_TASK_2_SWITCH_CORRECT_ANSWER(:,column_accuracy),1) / size(matrix_TASK_2_SWITCH,1) * 100;
     
